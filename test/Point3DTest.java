@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Point3DTest {
 
-Point3D testPoint1 = new Point3D(3.4,5.8,0.2);
-Point3D testPonit2 = new Point3D(6.8, 6 , 0);
-Point3D testPoint3 = new Point3D(6.8, 6 , 0);
-Point3D testPoint4 = new Point3D(3.4,5.7999999,0.2);
-Point3D testPoint5 = new Point3D(3.4,5.8,7);
-Point3D testPoint6 = new Point3D(3.4,7,0.2);
+    Point3D testPoint1 = new Point3D(3.4, 5.8, 0.2);
+    Point3D testPonit2 = new Point3D(6.8, 6, 0);
+    Point3D testPoint3 = new Point3D(6.8, 6, 0);
+    Point3D testPoint4 = new Point3D(3.4, 5.7999999, 0.2);
+    Point3D testPoint5 = new Point3D(3.4, 5.8, 7);
+    Point3D testPoint6 = new Point3D(3.4, 7, 0.2);
 
     @Test
     void testToString() {
@@ -24,7 +24,7 @@ Point3D testPoint6 = new Point3D(3.4,7,0.2);
     @Test
     void distance() {
         double distance = testPoint1.distance(testPonit2);
-        assertEquals(distance , 3.411744421846396);
+        assertEquals(distance, 3.411744421846396);
     }
 
     @Test
