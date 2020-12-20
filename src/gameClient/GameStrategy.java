@@ -7,9 +7,10 @@ import com.google.gson.JsonParser;
 import gameClient.GUI.MainPanel;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.*;
-
+/**
+ *This class is responsible for how the agents move in the game 
+ */
 public class GameStrategy implements Runnable {
     public static game_service _game;
     private static Arena _ar;
