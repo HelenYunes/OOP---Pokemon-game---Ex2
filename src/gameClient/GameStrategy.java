@@ -7,9 +7,11 @@ import com.google.gson.JsonParser;
 import gameClient.GUI.MainPanel;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.*;
+
 /**
- *This class is responsible for how the agents move in the game 
+ * This class is responsible for how the agents move in the game
  */
 public class GameStrategy implements Runnable {
     public static game_service _game;
@@ -28,7 +30,7 @@ public class GameStrategy implements Runnable {
     public void startGame(MainPanel panel, int id, int level) {
         mainPanel = panel;
         _game = Game_Server_Ex2.getServer(level);
-        game.login(id);
+        _game.login(id);
         client = new Thread(this);
         client.start();
     }
@@ -156,7 +158,6 @@ public class GameStrategy implements Runnable {
         Pokemon pokemonToCatch = null;
         List<Pokemon> pokemonList = _ar.getPokemons();
         for (int i = 0; i < pokemonList.size(); i++) {
-
             double distance = _ar.getAlgo().shortestPathDist(source, pokemonList.get(i).get_edge().getSrc());
             double currentPokemonScore = pokemonList.get(i).getValue() - distance;
             if (highestValueMoveScore < currentPokemonScore) {
@@ -195,8 +196,6 @@ public class GameStrategy implements Runnable {
             pathHelpers.add(new shortestPathHelper(shortestPath, pokemonToCatch.get_id(), agent.getID(), pokemonToCatch.get_edge().getSrc(), weight));
             i++;
         }
-
-
         while (!pathHelpers.isEmpty() && (agentPath.size() < agentList.size() && pokemonPath.size() < pokemonList.size())) {
             newpath = pathHelpers.poll();
             synchronized (pathHelpers) {
