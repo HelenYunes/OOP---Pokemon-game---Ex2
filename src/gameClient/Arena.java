@@ -206,6 +206,45 @@ public class Arena {
 
     }
 
+    /**
+     * this method turn json string into a graph and returns it.
+     *
+     * @param Jgraph
+     * @return
+     */
+    public static DWGraph_DS json2Graph(String Jgraph) {
+        DWGraph_DS builtGraph = new DWGraph_DS();
+
+        try {
+            JSONObject jaysonOBJ = new JSONObject(Jgraph);
+            JSONArray nodes = jaysonOBJ.getJSONArray("Nodes");
+            for (int i = 0; i < nodes.length(); i++) {
+                JSONObject node = nodes.getJSONObject(i);
+                String pos = node.getString("pos");
+                String[] xyz = pos.split(",");
+                double x = Double.parseDouble(xyz[0]);
+                double y = Double.parseDouble(xyz[1]);
+                double z = Double.parseDouble(xyz[2]);
+
+                int key = node.getInt("id");
+                GeoLocation gLocation = new GeoLocation(x, y, z);
+                NodeData newNode = new NodeData(key);
+                newNode.setLocation(gLocation);
+                builtGraph.addNode(newNode);
+            }
+
+            JSONArray Edges = jaysonOBJ.getJSONArray("Edges");
+            for (int i = 0; i < Edges.length(); i++) {
+                JSONObject edge = Edges.getJSONObject(i);
+                builtGraph.connect(edge.getInt("src"), edge.getInt("dest"), edge.getDouble("w"));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return builtGraph;
+    }
+
     public String getTime() {
         return time;
     }
@@ -260,4 +299,3 @@ public class Arena {
 
 
 }
-
