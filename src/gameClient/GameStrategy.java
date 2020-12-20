@@ -28,7 +28,7 @@ public class GameStrategy implements Runnable {
     public void startGame(MainPanel panel, int id, int level) {
         mainPanel = panel;
         _game = Game_Server_Ex2.getServer(level);
-        //game.login(id);
+        game.login(id);
         client = new Thread(this);
         client.start();
     }
