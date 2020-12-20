@@ -17,7 +17,13 @@ public class GameStrategy implements Runnable {
     public static Thread client;
     private static int id, level;
 
-    //
+    /**
+     * This function causes the game to start
+     *
+     * @param panel
+     * @param id
+     * @param level
+     */
     public void startGame(MainPanel panel, int id, int level) {
         mainPanel = panel;
         _game = Game_Server_Ex2.getServer(level);
@@ -26,7 +32,9 @@ public class GameStrategy implements Runnable {
         client.start();
     }
 
-    //
+    /**
+     * This function updates all the information about the game
+     */
     @Override
     public void run() {
         DWGraph_Algo g = new DWGraph_Algo();
@@ -57,7 +65,11 @@ public class GameStrategy implements Runnable {
         System.out.println(_game.toString());
     }
 
-    //
+    /**
+     * This function checks whether the agent is close to the Pokemon (Pikachu)
+     *
+     * @return is close to the Pikachu
+     */
     private boolean distanceFromPikachu() {
         for (Agent agent : _ar.JsonToAgents()) {
             for (Pokemon pokemon : _ar.getPokemons())
@@ -67,13 +79,18 @@ public class GameStrategy implements Runnable {
         return false;
     }
 
-    //
+    /**
+     * This function causes agents to move strategically
+     *
+     * @param game
+     * @param graph
+     */
     private void moveAgents(game_service game, directed_weighted_graph graph) {
         String move = game.move();
         _ar.update(move);
         List<Agent> agentList = _ar.getAgents();
         HashSet<Pokemon> pokemonList = Arena.json2Pokemons(game.getPokemons());
-        pokemonList.forEach(p -> Arena.updateEdge(p, graph));
+        pokemonList.forEach(pokemon -> Arena.updateEdge(pokemon, graph));
         _ar.setPokemons(pokemonList);
         for (int i = 0; i < agentList.size(); i++) {
             Agent agent = agentList.get(i);
@@ -91,7 +108,9 @@ public class GameStrategy implements Runnable {
         }
     }
 
-    //
+    /**
+     * This function updates the information about the agents
+     */
     private void updateAgents() {
         JsonObject j;
         JSONObject line;
@@ -125,7 +144,12 @@ public class GameStrategy implements Runnable {
         }
     }
 
-    //
+    /**
+     * This function returns the highest value Pokemon
+     *
+     * @param source
+     * @return highest Value of the Pokemon
+     */
     private static Pokemon highestValuePokemon(int source) {
         double highestValueMoveScore = -Integer.MAX_VALUE;
         Pokemon pokemonToCatch = null;
@@ -143,8 +167,11 @@ public class GameStrategy implements Runnable {
         return pokemonToCatch;
     }
 
+    /**
+     * This function is responsible for the next step in the game using the shortest distance
+     */
     private static void nextMove() {
-        int i = 1;
+        int i = 0;
         double weight = -Integer.MAX_VALUE;
         List<Pokemon> pokemonList = _ar.getPokemons();
         List<Agent> agentList = _ar.getAgents();
@@ -157,10 +184,10 @@ public class GameStrategy implements Runnable {
 
         for (Agent agent : agentList) {
             pokemonToCatch = highestValuePokemon(agent.getSrcNode());
-            weight = _ar.getGraph().getNode(pokemonToCatch.get_edge().getSrc()).getWeight() + pokemonToCatch.get_edge().getWeight();
+            weight = pokemonToCatch.get_edge().getWeight();
             if (_ar.getAlgo().shortestPath(agent.getSrcNode(), pokemonToCatch.get_edge().getSrc()) == null) {
                 pokemonToCatch = pokemonList.get(i);
-                weight = _ar.getGraph().getNode(pokemonToCatch.get_edge().getSrc()).getWeight() + pokemonToCatch.get_edge().getWeight();
+                weight = pokemonToCatch.get_edge().getWeight();
             }
             shortestPath = _ar.getAlgo().shortestPath(agent.getSrcNode(), pokemonToCatch.get_edge().getSrc());
             shortestPath.add(_ar.getGraph().getNode(pokemonToCatch.get_edge().getDest()));
@@ -171,9 +198,10 @@ public class GameStrategy implements Runnable {
 
         while (!pathHelpers.isEmpty() && (agentPath.size() < agentList.size() && pokemonPath.size() < pokemonList.size())) {
             newpath = pathHelpers.poll();
-
-            while (!pathHelpers.isEmpty() && (agentPath.contains(newpath.getSrc()) || pokemonPath.contains(newpath.getPokemon()) || newpath.getWeight() == Integer.MAX_VALUE)) {
-                newpath = pathHelpers.poll();
+            synchronized (pathHelpers) {
+                while (!pathHelpers.isEmpty() && (agentPath.contains(newpath.getSrc()) || pokemonPath.contains(newpath.getPokemon()) || newpath.getWeight() == Integer.MAX_VALUE)) {
+                    newpath = pathHelpers.poll();
+                }
             }
 
             pokemonPath.add(newpath.getPokemon());
