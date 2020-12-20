@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * This interface represents a Directed (positive) Weighted Graph Theory Algorithms including:
+ * This class represents a Directed (positive) Weighted Graph Theory Algorithms including:
  * 0. clone(); (copy)
  * 1. init(graph);
  * 2. isConnected(); // strongly (all ordered pais connected)
@@ -89,6 +89,13 @@ public class DWGraph_Algo implements dw_graph_algorithms, Serializable {
 
     }
 
+    /**
+     * A private function which returns the number of connected nodes to a given node
+     *
+     * @param G
+     * @param node
+     * @return
+     */
     private int numberOfConnectedNodes(directed_weighted_graph G, node_data node) {
         if (node.getTag() == 1) return 0;
         node.setTag(1);
@@ -238,44 +245,57 @@ public class DWGraph_Algo implements dw_graph_algorithms, Serializable {
         }
     }
 
-
-        public directed_weighted_graph convertJsonToGraph(JsonObject jsonObject, directed_weighted_graph graph) {
-            graph= new DWGraph_DS();
-            JsonArray nodes = jsonObject.get("Nodes").getAsJsonArray();
-            JsonArray edges = jsonObject.get("Edges").getAsJsonArray();
-            for (int i = 0; i < nodes.size(); i++) {
-                JsonObject node = nodes.get(i).getAsJsonObject();
-                graph.addNode(new NodeData(node.get("id").getAsInt()));
-                String s[] = node.get("pos").getAsString().split(",");
-                graph.getNode(node.get("id").getAsInt()).setLocation(new GeoLocation(Double.parseDouble(s[0]), Double.parseDouble(s[1]), Double.parseDouble(s[2])));
-            }
-            for (int i = 0; i < edges.size(); i++) {
-                JsonObject edge = edges.get(i).getAsJsonObject();
-                graph.connect(edge.get("src").getAsInt(), edge.get("dest").getAsInt(), edge.get("w").getAsDouble());
-            }
-            return graph;
+    /**
+     * This function converts a Json format to a graph
+     *
+     * @param jsonObject
+     * @param graph
+     * @return
+     */
+    public directed_weighted_graph convertJsonToGraph(JsonObject jsonObject, directed_weighted_graph graph) {
+        graph = new DWGraph_DS();
+        JsonArray nodes = jsonObject.get("Nodes").getAsJsonArray();
+        JsonArray edges = jsonObject.get("Edges").getAsJsonArray();
+        for (int i = 0; i < nodes.size(); i++) {
+            JsonObject node = nodes.get(i).getAsJsonObject();
+            graph.addNode(new NodeData(node.get("id").getAsInt()));
+            String s[] = node.get("pos").getAsString().split(",");
+            graph.getNode(node.get("id").getAsInt()).setLocation(new GeoLocation(Double.parseDouble(s[0]), Double.parseDouble(s[1]), Double.parseDouble(s[2])));
         }
-
-        public JsonObject convertGraphToJson(directed_weighted_graph graph, JsonObject jsonObject) {
-            JsonArray edges = new JsonArray();
-            JsonArray nodes = new JsonArray();
-            for (node_data node : graph.getV()) {
-                JsonObject thisFile = new JsonObject();
-                thisFile.addProperty("pos", "" + node.getLocation().x() + "," + node.getLocation().y() + "," + node.getLocation().z());
-                thisFile.addProperty("id", node.getKey());
-                nodes.add(thisFile);
-                for (edge_data edge : graph.getE(node.getKey())) {
-                    JsonObject json = new JsonObject();
-                    json.addProperty("src", edge.getSrc());
-                    json.addProperty("dest", edge.getDest());
-                    json.addProperty("w", edge.getWeight());
-                    edges.add(json);
-                }
-            }
-            jsonObject.add("Edges", edges);
-            jsonObject.add("Nodes", nodes);
-            return jsonObject;
+        for (int i = 0; i < edges.size(); i++) {
+            JsonObject edge = edges.get(i).getAsJsonObject();
+            graph.connect(edge.get("src").getAsInt(), edge.get("dest").getAsInt(), edge.get("w").getAsDouble());
         }
+        return graph;
+    }
+
+    /**
+     * This function converts a graph to a Json format
+     *
+     * @param graph
+     * @param jsonObject
+     * @return
+     */
+    public JsonObject convertGraphToJson(directed_weighted_graph graph, JsonObject jsonObject) {
+        JsonArray edges = new JsonArray();
+        JsonArray nodes = new JsonArray();
+        for (node_data node : graph.getV()) {
+            JsonObject thisFile = new JsonObject();
+            thisFile.addProperty("pos", "" + node.getLocation().x() + "," + node.getLocation().y() + "," + node.getLocation().z());
+            thisFile.addProperty("id", node.getKey());
+            nodes.add(thisFile);
+            for (edge_data edge : graph.getE(node.getKey())) {
+                JsonObject json = new JsonObject();
+                json.addProperty("src", edge.getSrc());
+                json.addProperty("dest", edge.getDest());
+                json.addProperty("w", edge.getWeight());
+                edges.add(json);
+            }
+        }
+        jsonObject.add("Edges", edges);
+        jsonObject.add("Nodes", nodes);
+        return jsonObject;
+    }
 
 
     @Override
