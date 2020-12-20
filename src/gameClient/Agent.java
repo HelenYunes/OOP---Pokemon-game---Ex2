@@ -28,7 +28,11 @@ public class Agent {
         this._path = new LinkedList<>();
     }
 
-    //
+    /**
+     * This returns the next node the agent should go to
+     *
+     * @return
+     */
     public int getNextNode() {
         int ans = -2;
         if (this._curr_edge == null) {
@@ -39,7 +43,11 @@ public class Agent {
         return ans;
     }
 
-    //
+    /**
+     * This function updates the information about the agents from a string in the format of Jason
+     *
+     * @param json
+     */
     public void updateAgents(String json) {
         JSONObject line;
         try {
@@ -70,42 +78,76 @@ public class Agent {
         }
     }
 
+    /**
+     * This function set the currently edge of the agent
+     *
+     * @return _curr_edge
+     */
     public edge_data get_curr_edge() {
         return this._curr_edge;
     }
 
-    //
+    /**
+     * Returns the ID of the agent
+     *
+     * @return _id
+     */
     public int getID() {
         return _id;
     }
 
-    //
+    /**
+     * Returns the value node of the agent
+     *
+     * @return _value
+     */
     public double getValue() {
         // TODO Auto-generated method stub
         return this._value;
     }
 
-    //
+    /**
+     * Returns the currently node of the agent
+     *
+     * @return _curr_node
+     */
     public int getSrcNode() {
         return this._curr_node.getKey();
     }
 
-    //
+    /**
+     * This function set the currently node of the agent
+     *
+     * @param src
+     */
     public void setCurrNode(int src) {
         this._curr_node = _gg.getNode(src);
     }
 
-    //
+    /**
+     * This function set the speed of the agent
+     *
+     * @return
+     */
     public void setSpeed(double v) {
         this._speed = v;
     }
 
-    //
+    /**
+     * Return the speed of the agent
+     *
+     * @return
+     */
     public double getSpeed() {
         return this._speed;
     }
 
-    //
+    /**
+     * This function set the next node the agent should go to
+     *
+     * @param path
+     * @param dest
+     */
     private void setNextNode(List<node_data> path, int dest) {
         if (path.size() > 0) {
             if (dest == -1)
@@ -115,12 +157,20 @@ public class Agent {
         }
     }
 
-    //
+    /**
+     * Set the value (money)
+     *
+     * @param v
+     */
     private void setMoney(double v) {
         _value = v;
     }
 
-    //
+    /**
+     * This function set the next node the agent should go to
+     *
+     * @param dest
+     */
     private void setNextNode(int dest) {
         if (dest == -1) {
             _curr_edge = null;
@@ -129,19 +179,27 @@ public class Agent {
         }
     }
 
-    //
+    /**
+     * This function returns the position
+     *
+     * @return _pos
+     */
     public geo_location getLocation() {
         return _pos;
     }
 
-    //
+    /**
+     * This function set the path for the agent
+     *
+     * @param path
+     */
     public void setPath(List<node_data> path) {
         if (path.size() > 0)
             this.setNextNode(path, path.remove(0).getKey());
         this._path = path;
     }
 
-    //
+
     public String toJSON() {
         int d = this.getNextNode();
         String ans = "{\"Agent\":{"
