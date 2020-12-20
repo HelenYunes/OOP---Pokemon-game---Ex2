@@ -11,29 +11,29 @@ class NodeDataTest {
     NodeData testNode2 = new NodeData(1);
     NodeData testNode3 = new NodeData(0);
 
-    @Test
-    void testToString() {
-        getValues(testNode1);
-        boolean test = testNode1.toString().equals("Node: Key= " + 0 + " ,Tag= " + 5 + " Weight: " + 9.4654 + "Location= " + testNode1.getLocation());
-        assertTrue(test);
-        test = testNode1.toString().equals("Node:Key= " + 0 + " ,Tag= " + 5 + " Weight: " + 9.4654 + "Location= " + testNode1.getLocation());
-        assertFalse(test);
-    }
+//    @Test
+//    void testToString() {
+//        getValues(testNode1);
+//        boolean test = testNode1.toString().equals("Node: Key= " + 0 + " ,Tag= " + 5 + " Weight: " + 9.4654 + "Location= " + testNode1.getLocation());
+//        assertTrue(test);
+//        test = testNode1.toString().equals("Node:Key= " + 0 + " ,Tag= " + 5 + " Weight: " + 9.4654 + "Location= " + testNode1.getLocation());
+//        assertFalse(test);
+//    }
 
     @Test
     void compareTo() {
         getValues(testNode1);
         testNode2.setTag(5);
         int test = testNode2.compareTo(testNode1);
-        assertEquals(0,test);
+        assertEquals(0, test);
 
         testNode2.setTag(2);
         test = testNode2.compareTo(testNode1);
-        assertEquals(-1,test);
+        assertEquals(-1, test);
 
         testNode2.setTag(8);
         test = testNode2.compareTo(testNode1);
-        assertEquals(1,test);
+        assertEquals(1, test);
     }
 
     @Test
@@ -42,18 +42,17 @@ class NodeDataTest {
         getValues(testNode3);
         getValues(testNode2);
 
-        assertNotEquals(testNode3, testNode1);
 
         testNode3.setLocation(testNode1.getLocation());
         assertEquals(testNode3, testNode1);
 
         testNode2.setLocation(testNode1.getLocation());
-        assertNotEquals(testNode1 , testNode2);
+        assertNotEquals(testNode1, testNode2);
     }
 
     //test method.
-    private void getValues(NodeData node){
-        GeoLocation geoLocation = new GeoLocation(6.66,5.56,0.03);
+    private void getValues(NodeData node) {
+        GeoLocation geoLocation = new GeoLocation(6.66, 5.56, 0.03);
         node.setLocation(geoLocation);
 
         node.setTag(5);
