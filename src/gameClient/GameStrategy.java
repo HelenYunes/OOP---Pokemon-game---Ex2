@@ -51,9 +51,9 @@ public class GameStrategy implements Runnable {
         Date time = new Date();
         time.setTime(_game.timeToEnd());
         while (_game.isRunning()) {
-            int dt = 95;
+            int dt = 97;
             if (this.distanceFromPikachu()) {
-                dt = 130;
+                dt = 125;
             }
             time.setTime(_game.timeToEnd());
             _ar.setTime(time);
