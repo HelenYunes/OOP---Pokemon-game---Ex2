@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CL_AgentTest {
+class AgentTest {
     CL_Agent testAgent;
     DWGraph_DS testGraph;
 
