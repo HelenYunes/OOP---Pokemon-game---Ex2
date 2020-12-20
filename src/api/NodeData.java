@@ -6,7 +6,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.*;
 import java.io.Serializable;
 
-
+/**
+ * This class represents the set of operations applicable on a
+ * node (vertex) in a (directional) weighted graph.
+ * @author boaz.benmoshe
+ *
+ */
 public class NodeData implements node_data, Serializable, Comparable<node_data> {
 
     @SerializedName(value = "id")
