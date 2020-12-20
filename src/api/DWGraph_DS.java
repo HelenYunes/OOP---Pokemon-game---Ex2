@@ -5,6 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * This class represents a directional weighted graph.
+ * The interface has a road-system or communication network in mind -
+ * and should support a large number of nodes (over 100,000).
+ * The implementation should be based on an efficient compact representation
+ * (should NOT be based on a n*n matrix).
+ */
 public class DWGraph_DS implements directed_weighted_graph, Serializable {
 
     @SerializedName(value = "Nodes")
@@ -77,7 +84,7 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
 
     /**
      * Connects an edge with weight w between node src to node dest.
-     * * Note: this method should run in O(1) time.
+     * Note: this method should run in O(1) time.
      *
      * @param src  - the source of the edge.
      * @param dest - the destination of the edge.
