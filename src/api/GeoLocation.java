@@ -7,6 +7,11 @@ public class GeoLocation implements geo_location {
     private double y;
     private double z;
 
+
+    /**
+     * Constructor:
+     */
+
     public GeoLocation() {
 
     }
@@ -23,6 +28,11 @@ public class GeoLocation implements geo_location {
         z = g.z();
     }
 
+    /**
+     * This function converts String to GeoLocation
+     *
+     * @param g
+     */
     public GeoLocation(String g) {
         String[] pos = g.split(",");
         x = Double.parseDouble(pos[0]);
@@ -45,6 +55,12 @@ public class GeoLocation implements geo_location {
         return y;
     }
 
+    /**
+     * Returns the distance
+     *
+     * @param g
+     * @return
+     */
     @Override
     public double distance(geo_location g) {
         double dx = this.x() - g.x();
