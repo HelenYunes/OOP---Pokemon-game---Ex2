@@ -142,7 +142,7 @@ public class NodeData implements node_data, Serializable, Comparable<node_data> 
     public String toString() {
         return "{" +
                 "key=" + Key +
-                ", pos=" + Location +
+                ", pos=" + Location.toString() +
                 ", weight=" + Weight +
                 ", info='" + Info + '\'' +
                 ", tag=" + Tag +
