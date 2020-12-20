@@ -2,6 +2,7 @@ package api;
 
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.*;
 import java.io.Serializable;
 
@@ -39,47 +40,93 @@ public class NodeData implements node_data, Serializable, Comparable<node_data> 
 
     }
 
+    /**
+     * Return the key (id) associated with this node.
+     * Note: each node_data have a unique key.
+     *
+     * @return
+     */
     @Override
     public int getKey() {
         return this.Key;
     }
 
+    /**
+     * returns the location of the node
+     *
+     * @return Location
+     */
     @Override
     public geo_location getLocation() {
         return this.Location;
     }
 
+    /**
+     * returns the location of the node
+     *
+     * @param p - new new location  (position) of this node.
+     */
     @Override
     public void setLocation(geo_location p) {
         this.Location = new GeoLocation(p);
 
     }
 
+    /**
+     * returns the weight of the node
+     *
+     * @return
+     */
     @Override
     public double getWeight() {
         return this.Weight;
     }
 
+    /**
+     * Set the weight of the node
+     *
+     * @param w - the new weight
+     */
     @Override
     public void setWeight(double w) {
         this.Weight = w;
     }
 
+    /**
+     * returns the Info of the node
+     *
+     * @return Info
+     */
     @Override
     public String getInfo() {
         return this.Info;
     }
 
+    /**
+     * set the Info of the node
+     *
+     * @param s
+     */
     @Override
     public void setInfo(String s) {
         this.Info = s + "";
     }
 
+    /**
+     * returns the Tag of the node
+     *
+     * @return
+     */
     @Override
     public int getTag() {
         return this.Tag;
     }
 
+    /**
+     * set the Tag of the node
+     *
+     * @param t - the new value of the tag
+     */
     @Override
     public void setTag(int t) {
         this.Tag = t;
