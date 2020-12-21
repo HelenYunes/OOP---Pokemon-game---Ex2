@@ -1,4 +1,6 @@
-# Welcome to the Helen's & Ilan's Pokemon game wiki!
+# Welcome to the Helen's & Ilan's Pokemon game project!
+
+This project is about implementing a directed (positive) weighted graph theory algorithms. In the second part of the project we implemented these algorithms on a game we called “Catch the Pokemons”.
 
 ![three_pokemons](https://cdn.vox-cdn.com/thumbor/DTp9raihs-H_5AvJYmaGg7sHz-k=/0x0:2257x1320/920x613/filters:focal(949x480:1309x840):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63738986/pokemon.0.0.png)
 
